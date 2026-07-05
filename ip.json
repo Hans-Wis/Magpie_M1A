@@ -1,0 +1,62 @@
+{
+  "id": "cpu.cpu_m1a",
+  "name": "cpu_m1a",
+  "display_name": "Magpie_M1A — RV32IMC + Zba/Zbb/Zbs + Zicond CPU core",
+  "kind": "cpu",
+  "isa": "RV32IMC_Zba_Zbb_Zbs_Zicond_Zicsr_Zifencei",
+  "privilege": "machine",
+  "misa": "0x40001106",
+  "microarchitecture": {
+    "pipeline": "4-stage in-order",
+    "features": [
+      "branch-predictor",
+      "return-address-stack",
+      "rv32c-cross-boundary-prefetch",
+      "pipelined-multiplier-lat2-thr1",
+      "iterative-divider",
+      "bit-manipulation-unit",
+      "full-forwarding",
+      "load-use-stall",
+      "optional-pmp"
+    ]
+  },
+  "interfaces": [
+    { "name": "imem", "protocol": "valid-ready", "role": "manager" },
+    { "name": "dmem", "protocol": "valid-ready", "role": "manager" },
+    { "name": "M_AXI_I", "protocol": "axi4-lite", "role": "manager", "optional": true },
+    { "name": "M_AXI_D", "protocol": "axi4-lite", "role": "manager", "optional": true }
+  ],
+  "top_modules": {
+    "native": "cpu_m1_top",
+    "axi4_lite": "cpu_m1_axil_top",
+    "reference_soc": "cpu_m1_soc_top"
+  },
+  "rtl": {
+    "filelist": "rtl/filelist.f",
+    "soc_dir": "rtl/soc"
+  },
+  "reference_soc": {
+    "peripherals": ["clint", "plic", "uart", "boot-rom", "sram", "debug-module"],
+    "address_map": {
+      "ram_sram": "0x2000_0000",
+      "clint": "0x0200_0000",
+      "plic": "0x0C00_0000",
+      "uart": "0x1000_0000"
+    }
+  },
+  "verification": {
+    "authority": "spike-per-commit-lockstep",
+    "riscv_arch_test": "74/74 (IMC)",
+    "line_coverage": "100%"
+  },
+  "process_trial": {
+    "note": "synthesis trial on a 28 nm process — indicative, not production sign-off",
+    "coremark_per_mhz": 3.23,
+    "fmax_mhz": 700,
+    "kge": 80.7
+  },
+  "docs": {
+    "spec": "docs/microarchitecture.md",
+    "readme": "README.md"
+  }
+}

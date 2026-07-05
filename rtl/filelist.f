@@ -1,0 +1,21 @@
+// Magpie_M1A core RTL filelist — RV32IMC + Zba/Zbb/Zbs + Zicond
++incdir+rtl
+rtl/def.vh
+rtl/rfu.v
+rtl/alu.v
+rtl/bmu.v
+rtl/idu.v
+rtl/ifu.v
+rtl/lsu.v
+rtl/csr.v
+rtl/trigger.v
+rtl/mul.v
+rtl/div.v
+rtl/forward.v
+rtl/hazard.v
+rtl/bp.v
+rtl/ras.v
+rtl/cdec.v
+rtl/pmp.v
+rtl/core.v
+rtl/cpu_m1_top.v

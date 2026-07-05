@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 520" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#33475b"/>
+    </marker>
+    <marker id="af" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#6d3f9c"/>
+    </marker>
+  </defs>
+  <style>
+    .stage{fill:#eef2f7;stroke:#33475b;stroke-width:1.6}
+    .unit{fill:#ffffff;stroke:#5b7083;stroke-width:1.2}
+    .isa{fill:#efe6fb;stroke:#6d3f9c;stroke-width:1.3}
+    .iface{fill:#dfeaf5;stroke:#33475b;stroke-width:1.4}
+    .io{fill:#fbeee6;stroke:#9c6b3f;stroke-width:1.4}
+    .st{font-size:19px;font-weight:bold;fill:#1c2733}
+    .un{font-size:13.5px;fill:#1c2733}
+    .sm{font-size:11.5px;fill:#3a4a5a}
+    .flow{stroke:#33475b;stroke-width:2.4;fill:none;marker-end:url(#a)}
+    .fb{stroke:#6d3f9c;stroke-width:1.8;fill:none;stroke-dasharray:6 4;marker-end:url(#af)}
+    .fbl{font-size:12px;fill:#6d3f9c;font-weight:bold}
+  </style>
+
+  <!-- Instruction memory interface -->
+  <rect class="iface" x="16" y="170" width="132" height="140" rx="7"/>
+  <text class="un" x="82" y="222" text-anchor="middle" font-weight="bold">Instruction</text>
+  <text class="un" x="82" y="242" text-anchor="middle" font-weight="bold">memory IF</text>
+  <text class="sm" x="82" y="264" text-anchor="middle">valid/ready · AXI4-Lite</text>
+
+  <!-- Interrupts -->
+  <rect class="io" x="386" y="38" width="156" height="44" rx="7"/>
+  <text class="un" x="464" y="58" text-anchor="middle" font-weight="bold">Interrupts</text>
+  <text class="sm" x="464" y="75" text-anchor="middle">mtip · msip · external</text>
+
+  <!-- IF stage -->
+  <rect class="stage" x="170" y="92" width="180" height="294" rx="9"/>
+  <text class="st" x="260" y="118" text-anchor="middle">IF</text>
+  <rect class="unit" x="186" y="132" width="148" height="52" rx="5"/><text class="un" x="196" y="154">ifu</text><text class="sm" x="196" y="172">PC / fetch</text>
+  <rect class="unit" x="186" y="190" width="148" height="52" rx="5"/><text class="un" x="196" y="212">bp</text><text class="sm" x="196" y="230">branch predictor</text>
+  <rect class="unit" x="186" y="248" width="148" height="52" rx="5"/><text class="un" x="196" y="270">ras</text><text class="sm" x="196" y="288">return stack</text>
+  <rect class="isa"  x="186" y="306" width="148" height="60" rx="5"/><text class="un" x="196" y="328">cdec</text><text class="sm" x="196" y="346">RV32C decompress</text><text class="sm" x="196" y="362">+ prefetch</text>
+
+  <!-- ID stage -->
+  <rect class="stage" x="376" y="92" width="176" height="294" rx="9"/>
+  <text class="st" x="464" y="118" text-anchor="middle">ID</text>
+  <rect class="unit" x="392" y="132" width="144" height="58" rx="5"/><text class="un" x="402" y="156">idu</text><text class="sm" x="402" y="176">decoder</text>
+  <rect class="unit" x="392" y="198" width="144" height="58" rx="5"/><text class="un" x="402" y="222">rfu</text><text class="sm" x="402" y="242">register file 31×32</text>
+  <rect class="unit" x="392" y="264" width="144" height="58" rx="5"/><text class="un" x="402" y="288">csr</text><text class="sm" x="402" y="308">CSR / trigger</text>
+
+  <!-- EX stage -->
+  <rect class="stage" x="578" y="72" width="230" height="334" rx="9"/>
+  <text class="st" x="693" y="98" text-anchor="middle">EX</text>
+  <rect class="unit" x="594" y="106" width="198" height="40" rx="5"/><text class="un" x="604" y="132">alu</text>
+  <rect class="isa"  x="594" y="152" width="198" height="46" rx="5"/><text class="un" x="604" y="174">bmu</text><text class="sm" x="640" y="174">Zba/Zbb/Zbs · Zicond</text>
+  <rect class="isa"  x="594" y="204" width="198" height="46" rx="5"/><text class="un" x="604" y="226">mul</text><text class="sm" x="640" y="226">pipelined (lat 2 / thr 1)</text>
+  <rect class="unit" x="594" y="256" width="198" height="40" rx="5"/><text class="un" x="604" y="282">div</text><text class="sm" x="640" y="282">iterative</text>
+  <rect class="unit" x="594" y="302" width="198" height="40" rx="5"/><text class="un" x="604" y="328">lsu</text><text class="sm" x="640" y="328">load / store</text>
+  <rect class="unit" x="594" y="348" width="198" height="40" rx="5"/><text class="un" x="604" y="374">forward + hazard</text>
+
+  <!-- WB stage -->
+  <rect class="stage" x="834" y="128" width="170" height="224" rx="9"/>
+  <text class="st" x="919" y="154" text-anchor="middle">WB</text>
+  <rect class="unit" x="850" y="168" width="138" height="66" rx="5"/><text class="un" x="860" y="196">register</text><text class="sm" x="860" y="216">writeback</text>
+  <rect class="unit" x="850" y="246" width="138" height="66" rx="5"/><text class="un" x="860" y="274">commit</text><text class="sm" x="860" y="294">trace</text>
+
+  <!-- Data memory interface -->
+  <rect class="iface" x="578" y="430" width="230" height="66" rx="7"/>
+  <text class="un" x="693" y="460" text-anchor="middle" font-weight="bold">Data memory interface</text>
+  <text class="sm" x="693" y="480" text-anchor="middle">valid/ready · AXI4-Lite</text>
+
+  <!-- Debug -->
+  <rect class="io" x="834" y="378" width="170" height="56" rx="7"/>
+  <text class="un" x="919" y="404" text-anchor="middle" font-weight="bold">Debug</text>
+  <text class="sm" x="919" y="422" text-anchor="middle">JTAG DTM + DM</text>
+
+  <!-- data-flow arrows -->
+  <path class="flow" d="M148,240 L170,240"/>
+  <path class="flow" d="M350,240 L376,240"/>
+  <path class="flow" d="M552,240 L578,240"/>
+  <path class="flow" d="M808,240 L834,240"/>
+  <path class="flow" d="M464,82 L464,92"/>
+  <path class="flow" d="M693,406 L693,430"/>
+  <path class="flow" d="M919,378 L919,352"/>
+
+  <!-- feedback (orthogonal, routed outside blocks) -->
+  <path class="fb" d="M693,72 L693,18 L260,18 L260,92"/>
+  <text class="fbl" x="430" y="13" text-anchor="middle">branch redirect / flush</text>
+  <path class="fb" d="M578,368 L565,368 L565,410 L464,410 L464,386"/>
+  <text class="fbl" x="512" y="405" text-anchor="middle">forwarding</text>
+</svg>

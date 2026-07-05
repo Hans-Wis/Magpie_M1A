@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="sa" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#33475b"/>
+    </marker>
+    <marker id="si" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#9c6b3f"/>
+    </marker>
+  </defs>
+  <style>
+    .core{fill:#efe6fb;stroke:#6d3f9c;stroke-width:1.8}
+    .bus{fill:#dfeaf5;stroke:#33475b;stroke-width:1.6}
+    .per{fill:#ffffff;stroke:#5b7083;stroke-width:1.3}
+    .dbg{fill:#eef2f7;stroke:#33475b;stroke-width:1.4}
+    .io{fill:#fbeee6;stroke:#9c6b3f;stroke-width:1.4}
+    .t{font-size:16px;font-weight:bold;fill:#1c2733}
+    .u{font-size:14px;font-weight:bold;fill:#1c2733}
+    .s{font-size:12px;fill:#3a4a5a}
+    .flow{stroke:#33475b;stroke-width:2.3;fill:none;marker-end:url(#sa)}
+    .irq{stroke:#9c6b3f;stroke-width:1.9;fill:none;stroke-dasharray:6 4;marker-end:url(#si)}
+    .il{font-size:12px;fill:#9c6b3f;font-weight:bold}
+    .bl{font-size:12px;fill:#33475b;font-weight:bold}
+
+  </style>
+
+  <!-- Debug chain -->
+  <rect class="io"  x="60"  y="28" width="100" height="44" rx="7"/><text class="u" x="110" y="56" text-anchor="middle">JTAG</text>
+  <rect class="dbg" x="190" y="28" width="100" height="44" rx="7"/><text class="u" x="240" y="56" text-anchor="middle">DTM</text>
+  <rect class="dbg" x="320" y="28" width="130" height="44" rx="7"/><text class="u" x="385" y="56" text-anchor="middle">Debug Module</text>
+  <path class="flow" d="M160,50 L190,50"/>
+  <path class="flow" d="M290,50 L320,50"/>
+  <path class="flow" d="M385,72 L385,92 L150,92 L150,120"/>
+  <text class="bl" x="262" y="86" text-anchor="middle">halt / resume</text>
+
+  <!-- Core -->
+  <rect class="core" x="60" y="120" width="180" height="140" rx="9"/>
+  <text class="t" x="150" y="172" text-anchor="middle">cpu_m1 core</text>
+  <text class="s" x="150" y="196" text-anchor="middle">RV32IMC + Zb + Zicond</text>
+  <text class="s" x="150" y="216" text-anchor="middle">4-stage pipeline</text>
+
+  <!-- Interrupt controllers (above the bus, next to core) -->
+  <rect class="per" x="310" y="140" width="140" height="94" rx="7"/><text class="u" x="380" y="182" text-anchor="middle">CLINT</text><text class="s" x="380" y="202" text-anchor="middle">0x0200_0000</text>
+  <rect class="per" x="480" y="140" width="140" height="94" rx="7"/><text class="u" x="550" y="182" text-anchor="middle">PLIC</text><text class="s" x="550" y="202" text-anchor="middle">0x0C00_0000</text>
+  <rect class="io"  x="650" y="140" width="150" height="94" rx="7"/><text class="u" x="725" y="182" text-anchor="middle">IRQ sources</text><text class="s" x="725" y="202" text-anchor="middle">×7  →  PLIC</text>
+
+  <!-- Interconnect bus -->
+  <rect class="bus" x="60" y="320" width="880" height="52" rx="8"/>
+  <text class="t" x="500" y="344" text-anchor="middle">Interconnect — AXI4-Lite / native bus</text>
+  <text class="s" x="500" y="362" text-anchor="middle">addr_decoder</text>
+
+  <!-- Memory-mapped peripherals (below the bus) -->
+  <rect class="per" x="60"  y="410" width="150" height="70" rx="7"/><text class="u" x="135" y="440" text-anchor="middle">Boot ROM</text>
+  <rect class="per" x="250" y="410" width="150" height="70" rx="7"/><text class="u" x="325" y="440" text-anchor="middle">RAM / SRAM</text><text class="s" x="325" y="460" text-anchor="middle">0x2000_0000</text>
+  <rect class="per" x="440" y="410" width="150" height="70" rx="7"/><text class="u" x="515" y="440" text-anchor="middle">UART</text><text class="s" x="515" y="460" text-anchor="middle">0x1000_0000</text>
+
+  <!-- bus connections (straight stubs) -->
+  <path class="flow" d="M110,260 L110,320"/><text class="bl" x="86" y="300">I-bus</text>
+  <path class="flow" d="M180,260 L180,320"/><text class="bl" x="188" y="300">D-bus</text>
+  <path class="flow" d="M380,234 L380,320"/>
+  <path class="flow" d="M550,234 L550,320"/>
+  <path class="flow" d="M135,410 L135,372"/>
+  <path class="flow" d="M325,410 L325,372"/>
+  <path class="flow" d="M515,410 L515,372"/>
+
+  <!-- IRQ sources -> PLIC (straight) -->
+  <path class="irq" d="M650,187 L620,187"/>
+
+  <!-- interrupt returns to core (straight, above the bus, no crossings) -->
+  <path class="irq" d="M310,190 L240,190"/>
+  <text class="il" x="275" y="182" text-anchor="middle">mtip / msip</text>
+  <path class="irq" d="M550,140 L550,108 L200,108 L200,120"/>
+  <text class="il" x="360" y="102" text-anchor="middle">external IRQ</text>
+</svg>
