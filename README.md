@@ -1,4 +1,7 @@
-# Magpie_M1A
+# Magpie_M1A  RISC-V CPU
+## RV32IMC 4-stage
+## PLIC / JTAG / AXI / RISC-V Debug Module 
+## 700MHz@TSMC 28nm 
 
 Magpie_M1A is a small 32-bit RISC-V CPU core (**RV32IMC + Zba/Zbb/Zbs + Zicond**) written in
 Verilog. The core targets embedded control and edge applications: it has a 4-stage in-order
